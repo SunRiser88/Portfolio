@@ -118,7 +118,7 @@
         
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
         }
         
@@ -148,11 +148,18 @@
             width: 100%;
         }
         
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
+            z-index: 1001;
         }
         
         .hamburger span {
@@ -179,7 +186,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-left: 2rem;
         }
         
         .theme-toggle-wrapper {
@@ -205,10 +211,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: var(--primary-black);
+            background-color: var(--light-gray);
             transition: background-color 0.3s;
             border-radius: 24px;
-            border: 2px solid var(--primary-black);
+            border: 2px solid var(--light-gray);
             z-index: 1;
         }
         
@@ -218,7 +224,7 @@
             width: 16px;
             left: 2px;
             top: 2px;
-            background-color: var(--primary-white);
+            background-color: var(--primary-black);
             transition: transform 0.3s ease;
             border-radius: 50%;
         }
@@ -229,12 +235,17 @@
         
         .theme-toggle-checkbox:checked ~ .theme-toggle-slider .theme-toggle-slider-button {
             transform: translateX(26px);
+            background-color: var(--primary-white);
         }
         
         .theme-icon {
             font-size: 1rem;
-            color: var(--primary-black);
+            color: var(--gray);
             transition: color 0.3s ease;
+        }
+        
+        .theme-icon.active {
+            color: var(--primary-black);
         }
         
         /* Sections */
@@ -445,6 +456,56 @@
         .skill-item h4 {
             font-size: 1rem;
             font-weight: 600;
+        }
+        
+        /* Analytics, Engineering, Product Sections */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        
+        .expertise-card {
+            background: var(--primary-white);
+            padding: 2.5rem;
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .expertise-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary-black);
+        }
+        
+        .expertise-card i {
+            font-size: 3rem;
+            color: var(--primary-black);
+            margin-bottom: 1.5rem;
+        }
+        
+        .expertise-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .expertise-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .expertise-card ul li {
+            color: var(--gray);
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .expertise-card ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary-black);
         }
         
         /* Experience Section */
@@ -714,6 +775,7 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             background: var(--primary-white);
+            color: var(--primary-black);
         }
         
         .form-group input:focus,
@@ -771,7 +833,7 @@
         }
         
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .nav-links {
                 position: fixed;
                 left: -100%;
@@ -784,6 +846,11 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
                 padding: 2rem 0;
                 gap: 1.5rem;
+                z-index: 999;
+            }
+            
+            [data-theme="dark"] .nav-links {
+                background: var(--primary-white);
             }
             
             .nav-links.active {
@@ -794,15 +861,15 @@
                 display: flex;
             }
             
-            .theme-toggle {
-                margin-left: 1rem;
-            }
-            
             .about-content {
                 grid-template-columns: 1fr;
             }
             
             .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .expertise-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -822,10 +889,13 @@
         /* Animation delays for sections */
         #home { animation-delay: 0.1s; }
         #about { animation-delay: 0.2s; }
-        #experience { animation-delay: 0.3s; }
-        #projects { animation-delay: 0.4s; }
-        #publications { animation-delay: 0.5s; }
-        #contact { animation-delay: 0.6s; }
+        #analytics { animation-delay: 0.25s; }
+        #engineering { animation-delay: 0.3s; }
+        #product { animation-delay: 0.35s; }
+        #experience { animation-delay: 0.4s; }
+        #projects { animation-delay: 0.5s; }
+        #publications { animation-delay: 0.6s; }
+        #contact { animation-delay: 0.7s; }
     </style>
 </head>
 <body>
@@ -836,21 +906,23 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                <li><a href="#engineering" class="nav-link">Engineering</a></li>
+                <li><a href="#product" class="nav-link">Product</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#publications" class="nav-link">Publications</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="nav-right">
                 <div class="theme-toggle">
-                    <i class="fas fa-sun theme-icon"></i>
+                    <i class="fas fa-sun theme-icon" id="sunIcon"></i>
                     <div class="theme-toggle-wrapper">
                         <input type="checkbox" id="themeToggle" class="theme-toggle-checkbox">
                         <div class="theme-toggle-slider">
                             <div class="theme-toggle-slider-button"></div>
                         </div>
                     </div>
-                    <i class="fas fa-moon theme-icon"></i>
+                    <i class="fas fa-moon theme-icon" id="moonIcon"></i>
                 </div>
                 <div class="hamburger" id="hamburger">
                     <span></span>
@@ -926,6 +998,123 @@
                     <i class="fas fa-users"></i>
                     <h4>Leadership</h4>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics">
+        <div class="section-header">
+            <h2>Analytics</h2>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Data Visualization</h3>
+                <ul>
+                    <li>Built Tableau dashboards monitoring $1M+ monthly transactions</li>
+                    <li>Created interactive KPI dashboards for 700K+ traffic accident records</li>
+                    <li>Designed executive-level reporting visualizations</li>
+                    <li>Implemented real-time operational monitoring systems</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-database"></i>
+                <h3>Statistical Analysis</h3>
+                <ul>
+                    <li>Performed comprehensive retail sales analysis using SQL</li>
+                    <li>Built regression models for staffing optimization</li>
+                    <li>Conducted correlation analysis on large datasets</li>
+                    <li>Developed predictive models for business forecasting</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-tasks"></i>
+                <h3>Process Optimization</h3>
+                <ul>
+                    <li>Reduced manual reporting time from 14 hours to 45 minutes weekly</li>
+                    <li>Automated complex data workflows using Python</li>
+                    <li>Streamlined end-to-end data flow mapping processes</li>
+                    <li>Improved operational efficiency through analytics-driven insights</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engineering Section -->
+    <section id="engineering">
+        <div class="section-header">
+            <h2>Engineering</h2>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <i class="fas fa-code"></i>
+                <h3>Data Engineering</h3>
+                <ul>
+                    <li>Built scalable ETL pipelines processing 500K+ records</li>
+                    <li>Integrated data from 8+ sources maintaining 99% accuracy</li>
+                    <li>Designed robust data validation frameworks</li>
+                    <li>Implemented automated data quality checks</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-cogs"></i>
+                <h3>ML/AI Development</h3>
+                <ul>
+                    <li>Improved ML model accuracy from 72% to 89%</li>
+                    <li>Reduced training time by 40% through optimization</li>
+                    <li>Developed feature engineering pipelines</li>
+                    <li>Created high-quality training datasets through web scraping</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-server"></i>
+                <h3>Database Management</h3>
+                <ul>
+                    <li>Designed complex SQL queries for audit and governance</li>
+                    <li>Managed data migrations ensuring regulatory compliance</li>
+                    <li>Optimized database performance for large-scale analytics</li>
+                    <li>Implemented data security and access controls</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section id="product">
+        <div class="section-header">
+            <h2>Product</h2>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>Stakeholder Management</h3>
+                <ul>
+                    <li>Trained 50+ users on complex data workflows</li>
+                    <li>Collaborated with cross-functional teams on product requirements</li>
+                    <li>Translated business needs into technical specifications</li>
+                    <li>Facilitated data-driven decision making across departments</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Product Innovation</h3>
+                <ul>
+                    <li>Designed user-friendly dashboards for non-technical stakeholders</li>
+                    <li>Created self-service analytics solutions</li>
+                    <li>Developed automated reporting systems</li>
+                    <li>Built interactive tools empowering business users</li>
+                </ul>
+            </div>
+            <div class="expertise-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Risk & Compliance</h3>
+                <ul>
+                    <li>Led operational risk management initiatives</li>
+                    <li>Ensured regulatory compliance in financial reporting</li>
+                    <li>Strengthened controls in ambiguous environments</li>
+                    <li>Implemented governance frameworks for data quality</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -1090,9 +1279,7 @@
                     <label for="message">Message</label>
                     <textarea id="message" name="message" required></textarea>
                 </div>
-                <!-- Honeypot for spam protection -->
                 <input type="text" name="_gotcha" style="display:none">
-                <!-- Hidden fields -->
                 <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission">
                 <button type="submit" class="btn btn-primary">
                     Send Message
@@ -1114,7 +1301,7 @@
     </button>
 
     <!-- JavaScript -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Hamburger Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
@@ -1135,15 +1322,21 @@
         // Theme Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
         
         // Check for saved theme preference or default to light mode
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             htmlElement.setAttribute('data-theme', 'dark');
             themeToggle.checked = true;
+            sunIcon.classList.remove('active');
+            moonIcon.classList.add('active');
         } else {
             htmlElement.setAttribute('data-theme', 'light');
             themeToggle.checked = false;
+            sunIcon.classList.add('active');
+            moonIcon.classList.remove('active');
         }
         
         // Toggle theme when checkbox changes
@@ -1151,9 +1344,13 @@
             if (this.checked) {
                 htmlElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
+                sunIcon.classList.remove('active');
+                moonIcon.classList.add('active');
             } else {
                 htmlElement.setAttribute('data-theme', 'light');
                 localStorage.setItem('theme', 'light');
+                sunIcon.classList.add('active');
+                moonIcon.classList.remove('active');
             }
         });
         
@@ -1282,4 +1479,17 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.query
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
